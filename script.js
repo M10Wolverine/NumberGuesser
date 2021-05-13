@@ -1,19 +1,32 @@
 "use strict";
 
+//Game variables
 let secretNum = Math.trunc(Math.random() * 20) + 1;
 let score = 20;
 let highScore = 0;
 
-//Reset game
+//DOM elements
+const domMsg = document.querySelector(".message");
+const domScore = document.querySelector(".score");
+const domNum = document.querySelector(".number");
+const domBody = document.querySelector("body");
+const domGuess = document.querySelector(".guess");
+const domHighScore = document.querySelector(".highscore");
+
+function setMessage(msg) {
+  domMsg.textContent = msg;
+}
+
+//Play again button
 document.querySelector(".again").addEventListener("click", function () {
   secretNum = Math.trunc(Math.random() * 20) + 1;
   score = 20;
-  document.querySelector(".message").textContent = "Start guessing...";
-  document.querySelector(".score").textContent = 20;
-  document.querySelector(".number").textContent = "?"; //originally ?
-  document.querySelector(".guess").value = "";
-  document.querySelector("body").style.backgroundColor = "#222";
-  document.querySelector(".number").style.width = "15rem";
+  setMessage("Start guessing...");
+  domScore.textContent = 20;
+  domNum.textContent = "?";
+  domGuess.value = "";
+  domBody.style.backgroundColor = "#222";
+  domNum.style.width = "15rem";
 });
 
 //Guess button
@@ -22,27 +35,25 @@ document.querySelector(".check").addEventListener("click", function () {
   console.log(guess);
   if (!guess || guess < 1 || guess > 20) {
     //Invalid input
-    document.querySelector(".message").textContent = "No / Invalid Number!";
+    setMessage("No / Invalid Number!");
   } else if (guess === secretNum) {
     //Correct Guess
-    document.querySelector(".message").textContent =
-      "Correct Number! Congratulations!";
-    document.querySelector(".number").textContent = secretNum;
-    document.querySelector("body").style.backgroundColor = "#60b347";
-    document.querySelector(".number").style.width = "30rem";
+    setMessage("Correct Number! Congratulations!");
+    domNum.textContent = secretNum;
+    domBody.style.backgroundColor = "#60b347";
+    domNum.style.width = "30rem";
     if (score > highScore) {
       highScore = score;
-      document.querySelector(".highscore").textContent = highScore;
+      domHighScore.textContent = highScore;
     }
-  } else if (guess !== secretNum) { //Wrong guess
-    document.querySelector(".message").textContent =
-      guess < secretNum ? "Too Low!" : "Too High!";
+  } else if (guess !== secretNum) {
+    setMessage(guess < secretNum ? "Too Low!" : "Too High!");
     if (score > 1) {
       score--;
-      document.querySelector(".score").textContent = score;
+      domScore.textContent = score;
     } else {
-      document.querySelector(".message").textContent = "You Lose!";
-      document.querySelector(".score").textContent = 0;
+      setMessage("You Lose!");
+      domScore.textContent = 0;
     }
   }
 });
