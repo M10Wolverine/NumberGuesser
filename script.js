@@ -47,7 +47,15 @@ document.querySelector(".check").addEventListener("click", function () {
       domHighScore.textContent = highScore;
     }
   } else if (guess !== secretNum) {
-    setMessage(guess < secretNum ? "Too Low!" : "Too High!");
+    //setMessage(guess < secretNum ? "Too Low!" : "Too High!");
+    if (guess < secretNum) {
+      setMessage("Too Low!");
+      domBody.style.backgroundColor = "rgb(226, 55, 55)"; //red background
+    } else {
+      setMessage("Too High!");
+      domBody.style.backgroundColor = "rgb(17, 33, 180)"; //blue background
+    }
+
     if (score > 1) {
       score--;
       domScore.textContent = score;
